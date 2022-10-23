@@ -14,7 +14,7 @@ func main() {
 	net.HandleFunc("/hello", helloHandler)
 	net.HandleFunc("/form", formHandler)
 
-	f.Println("starting server at port 8080")
+	f.Println("Starting server at port 8080")
 
 	if err := net.ListenAndServe(":8080", nil); err != nil {
 		l.Fatal(err)
