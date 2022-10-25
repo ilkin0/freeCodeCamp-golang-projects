@@ -14,7 +14,7 @@ type Book struct {
 	Author      string `json:"author"`
 	Publication string `json:"publication"`
 	ISBN        string `json:"isbn"`
-	Year        int    `json:"year"`
+	Year        int64  `json:"year"`
 }
 
 func init() {
@@ -23,4 +23,27 @@ func init() {
 
 	err := db.AutoMigrate(&Book{})
 	utils.HandleErrorPanic(err)
+}
+
+func CreateBook(b *Book) *Book {
+	db.Create(&b)
+	return b
+}
+
+func GetAllBooks() []Book {
+	var Books []Book
+	db.Find(&Books)
+	return Books
+}
+
+func GetBookById(Id int64) (*Book, *gorm.DB) {
+	var getBook Book
+	db := db.First(&getBook, Id)
+	return &getBook, db
+}
+
+func DeleteBookById(Id int64) Book {
+	var book Book
+	db.Delete(&book, Id)
+	return book
 }
